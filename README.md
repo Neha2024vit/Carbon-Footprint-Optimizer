@@ -12,8 +12,7 @@ The supplied workbook is included at `backend/data/carbon_datasets.xlsx`. The ba
 - `Cloud_Sustainability`: provider efficiency score
 - `Energy_Coefficients`: CPU, RAM, and storage energy coefficients
 
-The sample dataset lists nine region entries across AWS, Azure, and GCP. Country carbon intensity and renewable percentage are applied to listed regions as country-level proxies. Therefore, regional rows in the same country can have the same carbon intensity and emissions for an identical workload. This is a dataset limitation, not a claim that providers have identical measured emissions.
-
+The sample dataset lists nine region entries across AWS, Azure, and GCP. Country carbon intensity and renewable percentage are applied to listed regions as country-level proxies. Therefore, regional rows in the same country can have the same carbon intensity and emissions for an identical workload. 
 ## Sustainability score
 
 A score from 0 to 100 is calculated by the application for every eligible provider/region:
@@ -28,7 +27,7 @@ Where:
 
 The weights and normalization are a transparent, project-defined scoring model, not an official AWS/Azure/GCP sustainability rating. The score is displayed in the snapshot and for every row in the region comparison table. The region comparison table also displays the Recommendation Index (score points per kg CO2e). It should be described as an academic comparative indicator.
 
-## Recommendation index\n\n`Recommendation Index = Sustainability Score / Estimated Emissions (kg CO2e)`\n\nHigher values rank first. The index is only calculated when the sustainability score is available and estimated emissions are greater than zero. Zero-emission or missing-score rows receive no index and are placed after valid index results. This is a project-defined ranking ratio, not an industry-standard metric. Because the input emissions are estimates and some geographic inputs are country-level proxies, the ranking should be interpreted cautiously.\n\n## Emissions calculation
+## Recommendation index\n\n`Recommendation Index = Sustainability Score / Estimated Emissions (kg CO2e)`\n\nHigher values rank first. The index is only calculated when the sustainability score is available and estimated emissions are greater than zero. Zero-emission or missing-score rows receive no index and are placed after valid index results. 
 
 Energy coefficients are loaded from the workbook:
 
@@ -79,13 +78,7 @@ Open the local URL printed by Vite, usually http://localhost:5173.
 
 The frontend sends the target country to `POST /optimize`. The backend filters the workbook rows by exact case-insensitive country match before calculation and ranking. It compares eligible regions only for that country. Ranking uses the project-defined Recommendation Index: `Sustainability Score / Estimated Emissions (kg CO2e)`. A higher index ranks first. If the index is undefined because emissions are zero or the score is missing, that row is placed last. The index is a custom comparative ratio, not a standardized sustainability metric. This does not imply a complete overall recommendation based on price, latency, availability, or data residency.
 
-## Important limitations
 
-- Only countries and cloud regions listed in the supplied workbook can be evaluated.
-- Grid carbon intensity and renewable share are country-level data applied to each listed region, not region-specific measurements.
-- The provider efficiency scores and sustainability score reflect the supplied workbook and project-defined scoring formula; they are not official sustainability certifications.
-- The prototype does not calculate cost, latency, performance, lifecycle emissions, or a full provider-reported carbon footprint.
-- Before using results in a formal report, validate the workbook data, reporting years, units, coefficient assumptions, and scoring weights with credible sources.
 
 ## Main API endpoints
 
